@@ -27,6 +27,16 @@ public class FileDataLoaderTest {
   }
 
   @Test
+  void noDataFile() throws Exception {
+    DataLoader loader = new FileDataLoader(Path.of("data", "sensorData"));
+
+    List<TemperatureMeasurement> values = loader.loadMaxValues("notExisting", LocalDate.of(2022, 7, 5),
+        LocalDate.of(2022, 7, 6));
+
+    assertThat(values).hasSize(0);
+  }
+
+  @Test
   void loadMaxDataForMoreDays() throws Exception {
     DataLoader loader = new FileDataLoader(Path.of("data", "sensorData"));
 
