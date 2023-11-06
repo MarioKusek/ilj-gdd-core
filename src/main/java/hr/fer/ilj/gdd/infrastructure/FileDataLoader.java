@@ -21,8 +21,7 @@ public class FileDataLoader implements DataLoader {
 
   @Override
   public List<TemperatureMeasurement> loadMinValues(String sensorId, LocalDate start, LocalDate end) {
-    throw new UnsupportedOperationException();
-
+    return loadDataFromFile(start, end, dir.resolve(sensorId + "_min.csv"));
   }
 
   @Override

@@ -43,4 +43,20 @@ public class FileDataLoaderTest {
 
   }
 
+  @Test
+  void loadMinDataForMoreDays() throws Exception {
+    DataLoader loader = new FileDataLoader(Path.of("data", "sensorData"));
+
+    List<TemperatureMeasurement> values = loader.loadMinValues("0004A30B00F7EC6D", LocalDate.of(2022, 7, 5),
+        LocalDate.of(2022, 7, 7));
+
+    assertThat(values)
+      .hasSize(2)
+      .usingRecursiveComparison()
+      .withEqualsForType((a, b) -> Math.abs(a - b) < 1E-2, Double.class)
+      .isEqualTo(List.of(
+          new TemperatureMeasurement(LocalDate.of(2022, 7, 5), 20.0),
+          new TemperatureMeasurement(LocalDate.of(2022, 7, 6), 16.7)));
+
+  }
 }
