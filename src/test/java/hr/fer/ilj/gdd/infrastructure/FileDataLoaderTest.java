@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import hr.fer.ilj.gdd.common.DataLoader;
@@ -17,11 +18,27 @@ public class FileDataLoaderTest {
   void loadMaxData() throws Exception {
     DataLoader loader = new FileDataLoader(Path.of("data"));
 
-    List<TemperatureMeasurement> values = loader.loadMaxValues("fakeId", LocalDate.of(2022, 7, 5), LocalDate.of(2022, 7, 6));
+    List<TemperatureMeasurement> values = loader.loadMaxValues("0004A30B00F7EC6D", LocalDate.of(2022, 7, 5), LocalDate.of(2022, 7, 6));
 
     assertThat(values)
       .hasSize(1)
       .containsExactly(new TemperatureMeasurement(LocalDate.of(2022, 7, 5), 35.5));
+
+  }
+
+  @Disabled
+  @Test
+  void loadMaxDataForMoreDays() throws Exception {
+    DataLoader loader = new FileDataLoader(Path.of("data"));
+
+    List<TemperatureMeasurement> values = loader.loadMaxValues("0004A30B00F7EC6D", LocalDate.of(2022, 7, 5), LocalDate.of(2022, 7, 7));
+
+    assertThat(values)
+    .hasSize(1)
+    .containsExactly(
+        new TemperatureMeasurement(LocalDate.of(2022, 7, 5), 35.5),
+        new TemperatureMeasurement(LocalDate.of(2022, 7, 5), 20.9)
+        );
 
   }
 
