@@ -1,8 +1,12 @@
 package hr.fer.ilj.gdd.infrastructure;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import hr.fer.ilj.gdd.common.DataLoader;
 import hr.fer.ilj.gdd.common.TemperatureMeasurement;
@@ -23,7 +27,24 @@ public class FileDataLoader implements DataLoader {
 
   @Override
   public List<TemperatureMeasurement> loadMaxValues(String sensorId, LocalDate start, LocalDate end) {
-    return List.of(new TemperatureMeasurement(LocalDate.of(2022, 7, 5), 35.5));
+    return loadDataFromFile(start, end, dir.resolve(sensorId + "_max.csv"));
+  }
+
+  private List<TemperatureMeasurement> loadDataFromFile(LocalDate start, LocalDate end, Path file) {
+    OneFileLoader loader = new OneFileLoader(file);
+    List<TemperatureMeasurement> result = new LinkedList<>();
+    try {
+      Map<LocalDate, Double> values = loader.load();
+      LocalDate currentDate = start;
+      while(currentDate.isBefore(end)) {
+        result.add(new TemperatureMeasurement(currentDate, values.get(currentDate)));
+        currentDate = currentDate.plus(1, ChronoUnit.DAYS);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return result;
   }
 
 }
