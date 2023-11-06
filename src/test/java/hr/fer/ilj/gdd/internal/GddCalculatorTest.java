@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import hr.fer.ilj.gdd.DDValue;
+import hr.fer.ilj.gdd.common.TemperatureMeasurement;
 
 
 class GddCalculatorTest {

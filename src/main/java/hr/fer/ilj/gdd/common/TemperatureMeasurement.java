@@ -1,4 +1,4 @@
-package hr.fer.ilj.gdd.internal;
+package hr.fer.ilj.gdd.common;
 
 import java.time.LocalDate;
 

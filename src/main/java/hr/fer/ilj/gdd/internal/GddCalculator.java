@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import hr.fer.ilj.gdd.DDValue;
+import hr.fer.ilj.gdd.common.TemperatureMeasurement;
 
 public class GddCalculator {
 
