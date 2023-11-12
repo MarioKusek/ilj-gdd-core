@@ -36,7 +36,9 @@ public class FileDataLoader implements DataLoader {
       Map<LocalDate, Double> values = loader.load();
       LocalDate currentDate = start;
       while(currentDate.isBefore(end)) {
-        result.add(new TemperatureMeasurement(currentDate, values.get(currentDate)));
+        Double value = values.get(currentDate);
+        if(value != null)
+          result.add(new TemperatureMeasurement(currentDate, value));
         currentDate = currentDate.plus(1, ChronoUnit.DAYS);
       }
     } catch (IOException e) {
