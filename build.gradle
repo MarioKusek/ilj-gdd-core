@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'com.github.ben-manes.versions' // find new versions of dependency task: dependencyUpdates
+    id 'com.adarshr.test-logger' // log tests in console
 }
 
 repositories {
@@ -12,8 +14,8 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testImplementation 'org.assertj:assertj-core:3.24.2'
-    testImplementation 'org.mockito:mockito-core:5.6.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.6.0'
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.7.0'
     
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -23,6 +25,11 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
+
+testlogger {
+    theme 'standard' // or 'plain'
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()
