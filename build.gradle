@@ -2,7 +2,11 @@ plugins {
     id 'java'
     id 'com.github.ben-manes.versions' // find new versions of dependency task: dependencyUpdates
     id 'com.adarshr.test-logger' // log tests in console
+    id 'maven-publish'
 }
+
+group = 'hr.fer.ilj'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -33,4 +37,12 @@ testlogger {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
 }
